@@ -1,23 +1,30 @@
-version: '3.9'
+
 services:
   nginx:
-    build:
-      context: ./nginx
+    image: mynginx
     container_name: c_nginx
     ports:
       - '80:80'
       - '443:443'
+    extra_hosts:
+      - "app.com:172.18.1.9"
     networks:
-      - webproxy
+      custom_net:
+        ipv4_address: 172.18.1.9
   nodeapp:
-    build:
-      context: ./nodejs
+    image: mynodejs
     container_name: nodeapp
     ports:
       - 3000:3000
     networks:
-      - webproxy
+      custom_net:
+        ipv4_address: 172.18.1.5
 networks:
-  webproxy:
+  custom_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24
+          
 volumes:
   pgdata:
