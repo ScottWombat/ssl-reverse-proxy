@@ -13,7 +13,7 @@ services:
         ipv4_address: 172.18.1.9
   nodeapp:
     image: mynodejs
-    container_name: nodeapp
+    container_name: c_nodeapp
     ports:
       - 3000:3000
     networks:
